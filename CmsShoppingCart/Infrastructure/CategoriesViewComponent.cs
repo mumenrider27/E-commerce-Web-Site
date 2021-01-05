@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 
 namespace CmsShoppingCart.Infrastructure
 {
-
-    public class MainMenuViewComponent :ViewComponent
+    public class CategoriesViewComponent : ViewComponent
     {
         private readonly CmsShoppingCartContext context;
-        public MainMenuViewComponent(CmsShoppingCartContext context)
+        public CategoriesViewComponent(CmsShoppingCartContext context)
         {
             this.context = context;
         }
 
-        
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var pages = await GetPagesAsync();
-            return View(pages);
+            var categories = await GetCategoriesAsync();
+            return View(categories);
         }
 
-        private Task<List<Page>> GetPagesAsync()
+        private Task<List<Category>> GetCategoriesAsync()
         {
-            return context.Pages.OrderBy(x => x.Sorting).ToListAsync();
+            return context.Categories.OrderBy(x => x.Sorting).ToListAsync();
         }
     }
 }
