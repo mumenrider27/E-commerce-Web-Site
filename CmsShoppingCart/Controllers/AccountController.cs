@@ -52,5 +52,16 @@ namespace CmsShoppingCart.Controllers
             }
             return View(user);
         }
+
+        // GET /account/login
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl)
+        {
+            Login login = new Login
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(login);
+        }
     }
 }
