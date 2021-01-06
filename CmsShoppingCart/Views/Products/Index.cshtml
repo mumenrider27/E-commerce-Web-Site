@@ -43,7 +43,7 @@
 <script>
     $("a.addToCart").click(function (e) {
         e.preventDefault();
-        let id = $(this).data("id");
+
 
         let ajaxDiv = $(this).parent().parent().find("div.ajaxbg");
         ajaxDiv.removeClass("d-none");
@@ -61,7 +61,7 @@
                 });
             });
         });
-    }
+    });
 
 </script>
 
