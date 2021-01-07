@@ -9,7 +9,7 @@ editor: mary@gmail.com password:pass
 
 sample user: bob@gmail.com password:pass
 
-Graduation Project for Bilge Adam .NET BootCamp.
+Graduation Project for Bilge Adam .NET boot camp.
 
 -Page itself is not in english, but the training module explanation is should you scroll down.-
 
