@@ -1,18 +1,22 @@
-﻿using CmsShoppingCart.Infrastructure;
-using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CmsShoppingCart.Infrastructure;
+using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class CategoriesController : Controller
     {
+
         private readonly CmsShoppingCartContext context;
+
         public CategoriesController(CmsShoppingCartContext context)
         {
             this.context = context;
@@ -24,10 +28,10 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             return View(await context.Categories.OrderBy(x => x.Sorting).ToListAsync());
         }
 
-        // POST /admin/categories/create
+        // GET /admin/categories/create
         public IActionResult Create() => View();
 
-        // POST /admin/pages/create
+        // POST /admin/categories/create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Category category)
@@ -43,15 +47,14 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ModelState.AddModelError("", "The category already exists.");
                     return View(category);
                 }
+
                 context.Add(category);
                 await context.SaveChangesAsync();
 
                 TempData["Success"] = "The category has been added!";
 
-
                 return RedirectToAction("Index");
             }
-
 
             return View(category);
         }
@@ -75,7 +78,6 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 category.Slug = category.Name.ToLower().Replace(" ", "-");
 
                 var slug = await context.Categories.Where(x => x.Id != id).FirstOrDefaultAsync(x => x.Slug == category.Slug);
@@ -84,15 +86,14 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ModelState.AddModelError("", "The category already exists.");
                     return View(category);
                 }
+
                 context.Update(category);
                 await context.SaveChangesAsync();
 
                 TempData["Success"] = "The category has been edited!";
 
-
                 return RedirectToAction("Edit", new { id });
             }
-
 
             return View(category);
         }
@@ -131,6 +132,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 await context.SaveChangesAsync();
                 count++;
             }
+
             return Ok();
         }
     }

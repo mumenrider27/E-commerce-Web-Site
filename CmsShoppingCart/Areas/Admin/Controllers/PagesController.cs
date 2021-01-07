@@ -1,19 +1,21 @@
-﻿using CmsShoppingCart.Infrastructure;
-using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using CmsShoppingCart.Infrastructure;
+using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin,editor")]
     [Area("Admin")]
     public class PagesController : Controller
     {
         private readonly CmsShoppingCartContext context;
+
         public PagesController(CmsShoppingCartContext context)
         {
             this.context = context;
@@ -27,8 +29,8 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             List<Page> pagesList = await pages.ToListAsync();
 
             return View(pagesList);
-        }        
-        
+        }
+
         // GET /admin/pages/details/5
         public async Task<IActionResult> Details(int id)
         {
@@ -60,15 +62,14 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ModelState.AddModelError("", "The page already exists.");
                     return View(page);
                 }
+
                 context.Add(page);
                 await context.SaveChangesAsync();
 
                 TempData["Success"] = "The page has been added!";
 
-
                 return RedirectToAction("Index");
             }
-
 
             return View(page);
         }
@@ -92,7 +93,6 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 page.Slug = page.Id == 1 ? "home" : page.Title.ToLower().Replace(" ", "-");
 
                 var slug = await context.Pages.Where(x => x.Id != page.Id).FirstOrDefaultAsync(x => x.Slug == page.Slug);
@@ -101,15 +101,14 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ModelState.AddModelError("", "The page already exists.");
                     return View(page);
                 }
+
                 context.Update(page);
                 await context.SaveChangesAsync();
 
                 TempData["Success"] = "The page has been edited!";
 
-
                 return RedirectToAction("Edit", new { id = page.Id });
             }
-
 
             return View(page);
         }
@@ -122,7 +121,8 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             if (page == null)
             {
                 TempData["Error"] = "The page does not exist!";
-            } else
+            }
+            else
             {
                 context.Pages.Remove(page);
                 await context.SaveChangesAsync();
@@ -147,6 +147,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 await context.SaveChangesAsync();
                 count++;
             }
+
             return Ok();
         }
     }
