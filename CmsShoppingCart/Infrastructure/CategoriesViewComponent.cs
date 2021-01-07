@@ -11,11 +11,11 @@ namespace CmsShoppingCart.Infrastructure
     public class CategoriesViewComponent : ViewComponent
     {
         private readonly CmsShoppingCartContext context;
+
         public CategoriesViewComponent(CmsShoppingCartContext context)
         {
             this.context = context;
         }
-
 
         public async Task<IViewComponentResult> InvokeAsync()
         {

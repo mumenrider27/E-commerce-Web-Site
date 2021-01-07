@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Category>
+
 @{
     ViewData["Title"] = "Categories";
 }
@@ -41,7 +42,7 @@
 
 @section Scripts {
     <script>
-        $( "table#categories tbody" ).sortable({
+        $("table#categories tbody").sortable({
             items: "tr:not(.home)",
             placeholder: "ui-state-highlight",
             update: function () {

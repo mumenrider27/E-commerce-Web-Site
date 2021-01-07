@@ -5,19 +5,15 @@
 }
 
 
-
 @if (Model.CartItems.Count > 0)
 {
-
     <h1>Cart Overview</h1>
 
     <div class="cartWrapper">
         <div class="cartbg d-none">
-            <h3 class="text-center">Redirecting you to paypal</h3>
-            <img src="~/images/ajax-loading.gif" />
+            <h3 class="text-center">Redirecting you to paypal...</h3>
+            <img src="~/images/ajax-loader.gif" />
         </div>
-
-
         <table class="table">
             <tr>
                 <th>Product</th>
@@ -41,17 +37,17 @@
                 </tr>
             }
             <tr>
-                <td class="text-right" colspan="4">Grand Total: @Model.GrandTotal.ToString()</td>
+                <td class="text-right" colspan="4">Grand Total: @Model.GrandTotal.ToString("C2")</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="4">
                     <a asp-action="Clear" class="btn btn-danger">Clear Cart</a>
-                    <a href="#" class="btn btn-primary checkout">Checkout Cart</a>
+                    <a href="#" class="btn btn-primary checkout">Checkout</a>
                 </td>
             </tr>
-
         </table>
     </div>
+
 }
 else
 {
@@ -61,16 +57,22 @@ else
 <partial name="~/Views/Cart/_PaypalPartial.cshtml" for="CartItems" />
 
 @section Scripts {
+
     <script>
-        $("a.checkout").click(function (e) {
-            e.preventDefault();
-            $("div.cartbg").removeClass("d-none");
+        $(function () {
 
-            $.get("/cart/clear", {}, function () {
-                $("form.paypalform").submit();
+            $("a.checkout").click(function (e) {
+                e.preventDefault();
+
+                $("div.cartbg").removeClass("d-none");
+
+                $.get("/cart/clear", {}, function () {
+                    $("form.paypalform").submit();
+                });
+
             });
-        });
 
+        });
     </script>
 
 }

@@ -17,7 +17,8 @@ namespace CmsShoppingCart.Infrastructure
             if (cart == null || cart.Count == 0)
             {
                 smallCartVM = null;
-            } else
+            }
+            else
             {
                 smallCartVM = new SmallCartViewModel
                 {

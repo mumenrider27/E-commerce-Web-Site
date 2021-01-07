@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace CmsShoppingCart.Infrastructure
@@ -17,19 +16,19 @@ namespace CmsShoppingCart.Infrastructure
 
             var file = value as IFormFile;
 
-            if(file != null)
+            if (file != null)
             {
                 var extension = Path.GetExtension(file.FileName);
 
                 string[] extensions = { "jpg", "png" };
-
                 bool result = extensions.Any(x => extension.EndsWith(x));
 
-                if(!result)
+                if (!result)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
             }
+
             return ValidationResult.Success;
         }
 

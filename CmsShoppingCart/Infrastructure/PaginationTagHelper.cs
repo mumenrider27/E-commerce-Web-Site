@@ -45,11 +45,12 @@ namespace CmsShoppingCart.Infrastructure
 
             var content = new StringBuilder();
             content.Append(" <ul class='pagination'>");
+
             if (PageNumber != 1)
             {
                 content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}'>{PageFirst}</a></li>");
             }
-            
+
 
             if (PageNumber <= PageRange)
             {
@@ -88,12 +89,10 @@ namespace CmsShoppingCart.Infrastructure
                 }
             }
 
-
-            if(PageNumber != PageCount)
+            if (PageNumber != PageCount)
             {
                 content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}?p={PageCount}'>{PageLast}</a></li>");
             }
-            
 
 
             content.Append(" </ul");

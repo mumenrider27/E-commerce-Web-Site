@@ -1,11 +1,11 @@
-﻿using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CmsShoppingCart.Controllers
 {
@@ -16,9 +16,9 @@ namespace CmsShoppingCart.Controllers
         private readonly SignInManager<AppUser> signInManager;
         private IPasswordHasher<AppUser> passwordHasher;
 
-        public AppUser AppUser { get; private set; }
-
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IPasswordHasher<AppUser> passwordHasher)
+        public AccountController(UserManager<AppUser> userManager,
+                                SignInManager<AppUser> signInManager,
+                                IPasswordHasher<AppUser> passwordHasher)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -56,6 +56,7 @@ namespace CmsShoppingCart.Controllers
                     }
                 }
             }
+
             return View(user);
         }
 
@@ -67,6 +68,7 @@ namespace CmsShoppingCart.Controllers
             {
                 ReturnUrl = returnUrl
             };
+
             return View(login);
         }
 
@@ -83,12 +85,11 @@ namespace CmsShoppingCart.Controllers
                 {
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password, false, false);
                     if (result.Succeeded)
-                    {
                         return Redirect(login.ReturnUrl ?? "/");
-                    }
-                    ModelState.AddModelError("", "Login failed, wrong credentials");
                 }
+                ModelState.AddModelError("", "Login failed, wrong credentials.");
             }
+
             return View(login);
         }
 
@@ -96,6 +97,7 @@ namespace CmsShoppingCart.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
+
             return Redirect("/");
         }
 
@@ -126,12 +128,8 @@ namespace CmsShoppingCart.Controllers
 
                 IdentityResult result = await userManager.UpdateAsync(appUser);
                 if (result.Succeeded)
-                {
                     TempData["Success"] = "Your information has been edited!";
-                }
-                
             }
-
 
             return View();
         }

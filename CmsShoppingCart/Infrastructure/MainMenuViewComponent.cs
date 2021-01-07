@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace CmsShoppingCart.Infrastructure
 {
-
-    public class MainMenuViewComponent :ViewComponent
+    public class MainMenuViewComponent : ViewComponent
     {
         private readonly CmsShoppingCartContext context;
+
         public MainMenuViewComponent(CmsShoppingCartContext context)
         {
             this.context = context;
         }
 
-        
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var pages = await GetPagesAsync();

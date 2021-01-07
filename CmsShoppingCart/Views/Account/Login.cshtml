@@ -11,7 +11,8 @@
         <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" aso-for="ReturnUrl" />
+            <input type="hidden" asp-for="ReturnUrl" />
+
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
@@ -23,6 +24,7 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Log in" class="btn btn-primary" />
             </div>

@@ -1,5 +1,4 @@
 ﻿using CmsShoppingCart.Infrastructure;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,7 +10,7 @@ namespace CmsShoppingCart.Models
 {
     public class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider) // used to get registered services
+        public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new CmsShoppingCartContext(serviceProvider.GetRequiredService<DbContextOptions<CmsShoppingCartContext>>()))
             {
@@ -19,6 +18,7 @@ namespace CmsShoppingCart.Models
                 {
                     return;
                 }
+
                 context.Pages.AddRange(
                     new Page
                     {
@@ -38,7 +38,7 @@ namespace CmsShoppingCart.Models
                     {
                         Title = "Services",
                         Slug = "services",
-                        Content = "about us page",
+                        Content = "services page",
                         Sorting = 100
                     },
                     new Page
@@ -48,9 +48,8 @@ namespace CmsShoppingCart.Models
                         Content = "contact page",
                         Sorting = 100
                     }
-                 );
+                );
                 context.SaveChanges();
-
             }
         }
     }

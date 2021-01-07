@@ -1,16 +1,17 @@
-﻿using CmsShoppingCart.Infrastructure;
-using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CmsShoppingCart.Infrastructure;
+using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CmsShoppingCart.Controllers
 {
     public class CartController : Controller
     {
         private readonly CmsShoppingCartContext context;
+
         public CartController(CmsShoppingCartContext context)
         {
             this.context = context;
@@ -29,7 +30,7 @@ namespace CmsShoppingCart.Controllers
 
             return View(cartVM);
         }
-        
+
         // GET /cart/add/5
         public async Task<IActionResult> Add(int id)
         {
@@ -42,7 +43,7 @@ namespace CmsShoppingCart.Controllers
             if (cartItem == null)
             {
                 cart.Add(new CartItem(product));
-            } 
+            }
             else
             {
                 cartItem.Quantity += 1;
@@ -55,7 +56,7 @@ namespace CmsShoppingCart.Controllers
 
             return ViewComponent("SmallCart");
         }
-        
+
         // GET /cart/decrease/5
         public IActionResult Decrease(int id)
         {
@@ -66,13 +67,11 @@ namespace CmsShoppingCart.Controllers
             if (cartItem.Quantity > 1)
             {
                 --cartItem.Quantity;
-            } 
+            }
             else
             {
                 cart.RemoveAll(x => x.ProductId == id);
             }
-
-            
 
             if (cart.Count == 0)
             {
@@ -85,7 +84,7 @@ namespace CmsShoppingCart.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
         // GET /cart/remove/5
         public IActionResult Remove(int id)
         {
@@ -105,17 +104,16 @@ namespace CmsShoppingCart.Controllers
             return RedirectToAction("Index");
         }
 
-
         // GET /cart/clear
         public IActionResult Clear()
         {
             HttpContext.Session.Remove("Cart");
 
-            //return RedirectToAction("Page","Pages");
+            //return RedirectToAction("Page", "Pages");
             //return Redirect("/");
             if (HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest")
                 return Redirect(Request.Headers["Referer"].ToString());
-            
+
             return Ok();
         }
     }

@@ -1,18 +1,18 @@
-﻿using CmsShoppingCart.Infrastructure;
-using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CmsShoppingCart.Infrastructure;
+using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CmsShoppingCart.Controllers
 {
     public class PagesController : Controller
     {
-
         private readonly CmsShoppingCartContext context;
+
         public PagesController(CmsShoppingCartContext context)
         {
             this.context = context;
@@ -21,7 +21,7 @@ namespace CmsShoppingCart.Controllers
         // GET / or /slug
         public async Task<IActionResult> Page(string slug)
         {
-            if(slug == null)
+            if (slug == null)
             {
                 return View(await context.Pages.Where(x => x.Slug == "home").FirstOrDefaultAsync());
             }
