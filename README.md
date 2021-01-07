@@ -1,4 +1,4 @@
-# CmsShoppingCart
+# E-commerce Web Site
 
 Simple shop with cart options using ASP.Net Core 3.1 MVC
 
