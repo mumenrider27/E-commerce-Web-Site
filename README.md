@@ -1,6 +1,6 @@
 # E-commerce Web Site
 
-Simple e-commerce web site with cart and cms options using ASP.Net Core 3.1 MVC Backend; Adding products with pictures, editing products/pages etc.
+Simple e-commerce web site with cart and cms options using ASP.Net Core 3.1 MVC Backend; Adding products with pictures, editing products/pages etc. + Paypal integration.
 Frontend technologies used: Bootstrap,Jquery,Ajax
 
 admin: gravy@gmail.com password:pass
